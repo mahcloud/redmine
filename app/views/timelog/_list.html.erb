@@ -10,6 +10,7 @@
         :onclick => 'toggleIssuesSelection(this); return false;',
         :title => "#{l(:button_check_all)}/#{l(:button_uncheck_all)}" %>
     </th>
+    <th>Job Number</th>
     <% @query.inline_columns.each do |column| %>
       <%= column_header(column) %>
     <% end %>
@@ -20,6 +21,7 @@
 <% entries.each do |entry| -%>
   <tr class="time-entry <%= cycle("odd", "even") %> hascontextmenu">
     <td class="checkbox hide-when-print"><%= check_box_tag("ids[]", entry.id, false, :id => nil) %></td>
+    <td><%= entry.issue.job_number.to_s %></td>
     <%= raw @query.inline_columns.map {|column| "<td class=\"#{column.css_classes}\">#{column_content(column, entry)}</td>"}.join %>
     <td class="buttons">
     <% if entry.editable_by?(User.current) -%>

@@ -198,6 +198,14 @@ class Issue < ActiveRecord::Base
     base_reload(*args)
   end
 
+  def job_number
+    job_number = ''
+    self.available_custom_fields.each do |field|
+      job_number = self.custom_field_value(field.id) if field.name == 'Job Number'
+    end
+    job_number
+  end
+
   # Overrides Redmine::Acts::Customizable::InstanceMethods#available_custom_fields
   def available_custom_fields
     (project && tracker) ? (project.all_issue_custom_fields & tracker.custom_fields) : []
